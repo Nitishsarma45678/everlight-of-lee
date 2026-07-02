@@ -155,6 +155,17 @@ document.getElementById("sealButton").addEventListener("click", (event) => {
 });
 
 function resetAllChapters() {
+  
+  // 0. Wake up the Intro Scene Button!
+  const introScene = document.querySelector('.scene-intro');
+  const enterBtn = document.getElementById('enterEverwoodBtn');
+  
+  if (introScene) introScene.classList.remove('is-dissolving');
+  if (enterBtn) {
+    enterBtn.style.cssText = ""; // This strips away the invisibility!
+    enterBtn.style.opacity = "1";
+  }
+
   // 1. Chapter I (Rune Stone)
   const runeStone = document.getElementById("runeStone");
   const nameRevelation = document.getElementById("nameRevelation");
@@ -1196,14 +1207,15 @@ if (devSkipBtn) {
 const enterBtn = document.getElementById('enterEverwoodBtn');
 
 if (enterBtn) {
-  enterBtn.addEventListener('click', async () => {
-    // 1. Automatically wake the sound if she hasn't clicked the top-right button yet!
-    if (!soundOn) await setSound(true); 
+  // FIX: Removed "async" so the browser doesn't freeze on audio loading!
+  enterBtn.addEventListener('click', () => {
+    
+    // Automatically wake the sound in the background safely
+    if (!soundOn) setSound(true).catch(console.error); 
 
     const introScene = document.querySelector('.scene-intro');
     introScene.classList.add('is-dissolving'); // Triggers the CSS animations
 
-    // 2. A slow, deeply romantic swelling chord (C major)
     if (soundOn && audioContext) {
       const notes = [261.63, 329.63, 392.00, 523.25]; 
       notes.forEach((freq, i) => {
@@ -1213,9 +1225,7 @@ if (enterBtn) {
         osc.frequency.value = freq;
         
         gain.gain.setValueAtTime(0, audioContext.currentTime);
-        // Swells slowly over 2 seconds
         gain.gain.linearRampToValueAtTime(0.12, audioContext.currentTime + 2.0);
-        // Fades away slowly over 5 seconds
         gain.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 5.0);
         
         osc.connect(gain);
@@ -1225,7 +1235,7 @@ if (enterBtn) {
       });
     }
 
-    // 3. Morph the button into a tiny glowing star
+    // Morph the button into a tiny glowing star
     enterBtn.style.color = "transparent";
     enterBtn.style.width = "40px";
     enterBtn.style.minWidth = "0";
@@ -1235,13 +1245,13 @@ if (enterBtn) {
     enterBtn.style.borderColor = "var(--gold)";
     enterBtn.style.boxShadow = "0 0 30px var(--gold)";
 
-    // 4. Shatter the star into fireflies after 0.8 seconds
+    // Shatter the star into fireflies after 0.8 seconds
     window.setTimeout(() => {
       burstFrom(enterBtn, 40, false);
       enterBtn.style.opacity = "0";
     }, 800);
 
-    // 5. Wait a luxurious 3.5 seconds before revealing Chapter 1
+    // Wait 3.5 seconds before revealing Chapter 1
     window.setTimeout(() => {
       showScene(1, true);
     }, 3500);
