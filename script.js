@@ -1011,11 +1011,12 @@ function revealLetterProgressively() {
     [countdown, button]
   ];
 
-  // Reset and hide everything first
+// Reset and hide everything first
   sequence.flat().forEach(el => {
     if(el) {
       el.classList.remove("is-visible");
-      el.style.opacity = "0";
+      el.style.opacity = ""; /* FIX: Clears inline styles so the CSS can fade it in! */
+      
       // Assign the magic ink class to text elements (exclude borders/button)
       if (el !== button && !el.classList.contains("letter-corner")) {
         el.classList.add("magic-ink-text");
