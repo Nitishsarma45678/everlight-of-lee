@@ -1313,6 +1313,7 @@ h2 {
 
 .scene-wish {
   align-content: center;
+  grid-auto-rows: max-content;
   background: radial-gradient(circle at 50% 45%, rgba(59, 126, 92, 0.16), transparent 35%);
 }
 
