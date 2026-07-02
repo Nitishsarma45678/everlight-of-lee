@@ -1,0 +1,2420 @@
+:root {
+  --night: #041311;
+  --deep-green: #09231f;
+  --forest: #0e3028;
+  --moss: #1b4a39;
+  --mint: #b9e5c7;
+  --moon: #e8f7d7;
+  --gold: #f2d58b;
+  --warm-gold: #d9aa52;
+  --rose: #d8848f;
+  --ink: #183027;
+  --paper: #f4ecd6;
+  --paper-shadow: #cdbd96;
+  --glass: rgba(7, 29, 25, 0.72);
+  --glass-line: rgba(198, 238, 205, 0.18);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-width: 320px;
+  min-height: 100%;
+  background: var(--night);
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  overflow: hidden;
+  color: #edf8e9;
+  font-family: "Segoe UI", "Trebuchet MS", sans-serif;
+  background:
+    radial-gradient(circle at 50% 20%, rgba(52, 116, 88, 0.35), transparent 34%),
+    linear-gradient(180deg, #061c1b 0%, #071613 48%, #020907 100%);
+}
+
+button {
+  color: inherit;
+  font: inherit;
+}
+
+button:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 5px;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+#fireflies {
+  position: fixed;
+  inset: 0;
+  z-index: 3;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.world {
+  position: fixed;
+  z-index: 0;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.stars {
+  position: absolute;
+  inset: 0;
+  opacity: 0.7;
+  background-image:
+    radial-gradient(circle, rgba(232, 247, 215, 0.85) 0 1px, transparent 1.5px),
+    radial-gradient(circle, rgba(242, 213, 139, 0.55) 0 1px, transparent 1.5px);
+  background-position: 0 0, 38px 64px;
+  background-size: 93px 93px, 127px 127px;
+  mask-image: linear-gradient(to bottom, black, transparent 68%);
+  animation: starDrift 45s linear infinite;
+}
+
+.moon {
+  position: absolute;
+  top: 8vh;
+  left: 50%;
+  width: clamp(180px, 25vw, 330px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  transform: translateX(-50%);
+  opacity: 0.78;
+  background:
+    radial-gradient(circle at 37% 36%, rgba(181, 205, 176, 0.38) 0 5%, transparent 6%),
+    radial-gradient(circle at 63% 65%, rgba(181, 205, 176, 0.2) 0 9%, transparent 10%),
+    radial-gradient(circle at 68% 29%, rgba(181, 205, 176, 0.24) 0 4%, transparent 5%),
+    var(--moon);
+  box-shadow:
+    0 0 50px rgba(203, 237, 194, 0.35),
+    0 0 140px rgba(126, 203, 156, 0.2);
+}
+
+.aurora {
+  position: absolute;
+  width: 80vw;
+  height: 30vh;
+  border-radius: 50%;
+  filter: blur(55px);
+  opacity: 0.18;
+  transform-origin: center;
+}
+
+.aurora-one {
+  top: 5%;
+  left: -20%;
+  background: #42b786;
+  animation: aurora 14s ease-in-out infinite alternate;
+}
+
+.aurora-two {
+  top: 10%;
+  right: -25%;
+  background: #5673c7;
+  animation: aurora 18s ease-in-out -5s infinite alternate-reverse;
+}
+
+.far-trees,
+.near-trees {
+  position: absolute;
+  right: -4%;
+  bottom: -4%;
+  left: -4%;
+  height: 62vh;
+  background-repeat: repeat-x;
+  background-position: center bottom;
+  transform-origin: bottom;
+}
+
+.far-trees {
+  opacity: 0.52;
+  background-size: 190px 100%;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 190 300'%3E%3Cg fill='%230f3029'%3E%3Cpath d='M22 300h18l-5-102 32 42-35-89 25 25-28-78-20 82 15-20-22 91 27-43z'/%3E%3Cpath d='M105 300h20l-4-126 39 52-40-106 29 29-34-105-27 107 22-29-32 115 36-54z'/%3E%3Cpath d='M165 300h14l-3-74 21 29-23-65 17 18-20-72-18 72 15-20-21 73 23-34z'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+.near-trees {
+  z-index: 2;
+  height: 55vh;
+  background-size: 280px 100%;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 280 300'%3E%3Cg fill='%23030c09'%3E%3Cpath d='M7 300h32L32 165l48 64-54-128 38 39L22 5 0 96l20-27-35 144 40-60z'/%3E%3Cpath d='M213 300h35l-8-151 51 68-59-143 43 45L226 0l-31 122 25-32-44 153 51-76z'/%3E%3C/g%3E%3Cg fill='%23071915'%3E%3Cpath d='M104 300h25l-5-102 35 45-40-101 29 30-34-104-24 103 19-25-30 111 35-60z'/%3E%3C/g%3E%3C/svg%3E");
+  filter: drop-shadow(0 -12px 30px rgba(5, 24, 18, 0.45));
+}
+
+.mist {
+  position: absolute;
+  z-index: 4;
+  right: -30%;
+  bottom: 3vh;
+  left: -30%;
+  height: 18vh;
+  border-radius: 50%;
+  filter: blur(28px);
+  background: rgba(178, 218, 193, 0.12);
+}
+
+.mist-one {
+  animation: mistMove 18s ease-in-out infinite alternate;
+}
+
+.mist-two {
+  bottom: 13vh;
+  opacity: 0.5;
+  animation: mistMove 24s ease-in-out -7s infinite alternate-reverse;
+}
+
+#experience {
+  position: relative;
+  z-index: 5;
+  height: 100dvh;
+  overflow: hidden;
+}
+
+.scene {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  overflow-x: hidden;
+  overflow-y: auto;
+  padding: 78px 22px 92px;
+  text-align: center;
+  opacity: 0;
+  transform: translateY(18px) scale(0.99);
+  transition: opacity 0.9s ease, transform 0.9s ease;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(242, 213, 139, 0.4) transparent;
+}
+
+.scene.is-active {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.scene.is-leaving {
+  opacity: 0;
+  transform: translateY(-20px) scale(1.01);
+}
+
+.scene-intro {
+  align-content: center;
+  padding-bottom: 120px;
+}
+
+.eyebrow,
+.chapter-number,
+.letter-date {
+  margin: 0 0 14px;
+  color: var(--gold);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+}
+
+h1,
+h2 {
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 400;
+}
+
+h1 {
+  margin: 0;
+  color: #f4f6d9;
+  font-size: clamp(3.25rem, 9vw, 6.8rem);
+  line-height: 0.9;
+  letter-spacing: -0.055em;
+  text-shadow: 0 4px 35px rgba(218, 246, 207, 0.22);
+}
+
+h2 {
+  margin: 0 0 22px;
+  color: #f3f5d8;
+  font-size: clamp(2.2rem, 5.5vw, 4.4rem);
+  line-height: 1;
+  letter-spacing: -0.035em;
+}
+
+.intro-copy {
+  margin: 24px 0 28px;
+  color: rgba(236, 248, 231, 0.72);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1rem, 2vw, 1.24rem);
+  font-style: italic;
+  line-height: 1.65;
+}
+
+.intro-sigil {
+  position: relative;
+  display: grid;
+  width: 82px;
+  aspect-ratio: 1;
+  margin: 0 auto 22px;
+  place-items: center;
+}
+
+.sigil-orbit {
+  position: absolute;
+  inset: 0;
+  border: 1px solid rgba(242, 213, 139, 0.54);
+  border-radius: 48% 52% 50% 50%;
+  box-shadow: 0 0 22px rgba(242, 213, 139, 0.15);
+  animation: orbit 9s linear infinite;
+}
+
+.sigil-orbit::before,
+.sigil-orbit::after {
+  position: absolute;
+  width: 6px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--gold);
+  box-shadow: 0 0 13px var(--gold);
+  content: "";
+}
+
+.sigil-orbit::before {
+  top: 7px;
+  right: 8px;
+}
+
+.sigil-orbit::after {
+  bottom: 4px;
+  left: 14px;
+}
+
+.sigil-crown {
+  color: var(--gold);
+  font-size: 2.25rem;
+  text-shadow: 0 0 18px rgba(242, 213, 139, 0.6);
+}
+
+.magic-button,
+.text-button,
+.seal-button {
+  position: relative;
+  border: 0;
+  cursor: pointer;
+}
+
+.magic-button {
+  min-width: 220px;
+  padding: 15px 27px;
+  overflow: hidden;
+  border: 1px solid rgba(242, 213, 139, 0.55);
+  border-radius: 100px;
+  color: #fff7d8;
+  background: rgba(9, 34, 28, 0.7);
+  box-shadow:
+    inset 0 0 25px rgba(242, 213, 139, 0.06),
+    0 0 30px rgba(242, 213, 139, 0.08);
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.magic-button:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    inset 0 0 28px rgba(242, 213, 139, 0.13),
+    0 0 34px rgba(242, 213, 139, 0.18);
+}
+
+.magic-button i {
+  position: absolute;
+  top: -20%;
+  bottom: -20%;
+  left: -30%;
+  width: 20%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.34), transparent);
+  transform: skewX(-20deg);
+  animation: shimmer 4.8s ease-in-out infinite;
+}
+
+.small-note {
+  margin: 14px 0 0;
+  color: rgba(226, 241, 220, 0.4);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+}
+
+.sound-toggle {
+  position: fixed;
+  z-index: 20;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 13px;
+  border: 1px solid rgba(225, 243, 218, 0.15);
+  border-radius: 100px;
+  color: rgba(233, 248, 228, 0.7);
+  background: rgba(4, 19, 17, 0.58);
+  backdrop-filter: blur(12px);
+  cursor: pointer;
+}
+
+.sound-toggle:hover {
+  color: #fff;
+  border-color: rgba(242, 213, 139, 0.45);
+}
+
+/* .sound-toggle.is-on .sound-icon {
+  color: var(--gold);
+  animation: soundPulse 1.8s ease-in-out infinite;
+} */
+
+/* --- RESONATING STAR SOUND ICON --- */
+.sound-magic {
+  position: relative;
+  width: 26px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.magic-star {
+  font-size: 16px;
+  color: rgba(233, 248, 228, 0.4);
+  transition: color 0.5s ease, transform 0.5s ease, text-shadow 0.5s ease;
+  z-index: 2;
+}
+
+/* The invisible sonic rings */
+.magic-ripple {
+  position: absolute;
+  inset: 0;
+  border: 1px solid var(--gold);
+  border-radius: 50%;
+  opacity: 0;
+  transform: scale(0.5);
+  pointer-events: none;
+}
+
+/* --- WHEN MAGIC IS AWAKE --- */
+.sound-toggle.is-on .magic-star {
+  color: var(--gold);
+  text-shadow: 0 0 12px var(--gold);
+  /* The star slowly breathes and spins */
+  animation: starBreatheSpin 4s ease-in-out infinite alternate;
+}
+
+/* The rings echo outward endlessly */
+.sound-toggle.is-on .ripple-one {
+  animation: sonicRipple 2s cubic-bezier(0.25, 1, 0.5, 1) infinite;
+}
+
+.sound-toggle.is-on .ripple-two {
+  animation: sonicRipple 2s cubic-bezier(0.25, 1, 0.5, 1) infinite;
+  animation-delay: 1s; /* Delays the second ring for a continuous echo effect */
+}
+
+/* Animations */
+@keyframes starBreatheSpin {
+  0% { transform: scale(0.9) rotate(0deg); }
+  100% { transform: scale(1.1) rotate(25deg); text-shadow: 0 0 20px var(--gold), 0 0 30px #fff; }
+}
+
+@keyframes sonicRipple {
+  0% { transform: scale(0.5); opacity: 0.8; border-width: 2px; }
+  100% { transform: scale(1.9); opacity: 0; border-width: 0px; }
+}
+
+.sound-label {
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.chapter-card {
+  position: relative;
+  width: min(680px, 100%);
+  padding: clamp(28px, 5vw, 52px);
+  border: 1px solid var(--glass-line);
+  border-radius: 3px 34px 3px 34px;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.045), transparent 35%),
+    var(--glass);
+  box-shadow:
+    0 25px 80px rgba(0, 0, 0, 0.35),
+    inset 0 0 80px rgba(99, 168, 127, 0.035);
+  backdrop-filter: blur(16px);
+}
+
+.wide-card {
+  width: min(880px, 100%);
+}
+
+.chapter-card::before,
+.chapter-card::after {
+  position: absolute;
+  width: 70px;
+  height: 70px;
+  border-color: rgba(242, 213, 139, 0.3);
+  pointer-events: none;
+  content: "";
+}
+
+.chapter-card::before {
+  top: 14px;
+  left: 14px;
+  border-top: 1px solid;
+  border-left: 1px solid;
+}
+
+.chapter-card::after {
+  right: 14px;
+  bottom: 14px;
+  border-right: 1px solid;
+  border-bottom: 1px solid;
+}
+
+.story-copy {
+  width: min(520px, 100%);
+  margin: 0 auto;
+  color: rgba(235, 246, 230, 0.75);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1rem;
+  line-height: 1.75;
+}
+
+.story-copy strong {
+  color: var(--gold);
+  font-weight: 400;
+}
+
+.chapter-lead {
+  max-width: 570px;
+  margin: -7px auto 27px;
+  color: rgba(232, 245, 226, 0.65);
+  font-family: Georgia, "Times New Roman", serif;
+  font-style: italic;
+  line-height: 1.6;
+}
+
+.rune-stone {
+  position: relative;
+  display: grid;
+  width: 106px;
+  aspect-ratio: 1;
+  margin: 25px auto 10px;
+  border: 0;
+  border-radius: 50%;
+  place-items: center;
+  color: var(--gold);
+  background:
+    radial-gradient(circle at 38% 32%, rgba(227, 241, 197, 0.28), transparent 5%),
+    radial-gradient(circle at 60% 58%, #466656, #213e34 65%, #10231e);
+  box-shadow:
+    inset -8px -10px 20px rgba(0, 0, 0, 0.26),
+    inset 6px 7px 14px rgba(207, 230, 198, 0.08),
+    0 12px 30px rgba(0, 0, 0, 0.34);
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.4s ease;
+}
+
+.rune-stone:hover {
+  transform: scale(1.04);
+}
+
+.rune-stone.is-awake {
+  box-shadow:
+    inset -8px -10px 20px rgba(0, 0, 0, 0.18),
+    0 0 26px rgba(242, 213, 139, 0.5),
+    0 0 70px rgba(108, 210, 145, 0.27);
+}
+
+.rune-ring {
+  position: absolute;
+  inset: 15px;
+  border: 1px solid rgba(242, 213, 139, 0.45);
+  border-radius: 50%;
+}
+
+.rune-ring::before {
+  position: absolute;
+  inset: 7px;
+  border: 1px dashed rgba(242, 213, 139, 0.22);
+  border-radius: 50%;
+  content: "";
+  animation: orbit 16s linear infinite reverse;
+}
+
+.rune-mark {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 2.7rem;
+  text-shadow: 0 0 15px rgba(242, 213, 139, 0.5);
+}
+
+.interaction-hint {
+  margin: 0 0 8px;
+  color: rgba(231, 245, 225, 0.45);
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.revelation {
+  display: grid;
+  max-height: 0;
+  margin: 0 auto;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.8s ease, opacity 0.8s ease, margin 0.8s ease;
+}
+
+.revelation.is-visible {
+  max-height: 180px;
+  margin-top: 20px;
+  opacity: 1;
+}
+
+.revelation p {
+  margin: 0;
+  color: rgba(230, 244, 225, 0.62);
+  font-family: Georgia, "Times New Roman", serif;
+  font-style: italic;
+}
+
+.revelation strong {
+  margin: 5px 0;
+  color: var(--gold);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 2.25rem;
+  font-weight: 400;
+  letter-spacing: 0.28em;
+  text-indent: 0.28em;
+  text-shadow: 0 0 24px rgba(242, 213, 139, 0.35);
+}
+
+.revelation span {
+  color: rgba(232, 245, 227, 0.68);
+  font-size: 0.79rem;
+}
+
+.text-button {
+  padding: 10px 4px;
+  color: var(--gold);
+  background: transparent;
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  transition: color 0.2s ease, opacity 0.25s ease, transform 0.2s ease;
+}
+
+.text-button:hover:not(:disabled) {
+  color: #fff1b9;
+  transform: translateX(3px);
+}
+
+.text-button:disabled {
+  cursor: default;
+  opacity: 0.18;
+}
+
+.chapter-next {
+  display: block;
+  margin: 22px auto 0;
+}
+
+.virtue-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+.virtue-card {
+  min-height: 148px;
+  padding: 18px 10px;
+  border: 1px solid rgba(189, 225, 198, 0.14);
+  border-radius: 4px 18px 4px 18px;
+  color: rgba(237, 247, 232, 0.78);
+  background: rgba(4, 21, 17, 0.36);
+  cursor: pointer;
+  transition: transform 0.25s ease, border-color 0.3s ease, background 0.3s ease;
+}
+
+.virtue-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(242, 213, 139, 0.36);
+}
+
+.virtue-card.is-awake {
+  border-color: rgba(242, 213, 139, 0.58);
+  background: rgba(48, 87, 65, 0.32);
+  box-shadow: inset 0 0 34px rgba(242, 213, 139, 0.06);
+}
+
+.virtue-symbol {
+  display: grid;
+  width: 54px;
+  aspect-ratio: 1;
+  margin: 0 auto 12px;
+  border: 1px solid rgba(242, 213, 139, 0.3);
+  border-radius: 50%;
+  place-items: center;
+  color: var(--gold);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.75rem;
+  transition: transform 0.5s ease, box-shadow 0.5s ease;
+}
+
+.virtue-card.is-awake .virtue-symbol {
+  transform: rotate(360deg) scale(1.06);
+  box-shadow: 0 0 24px rgba(242, 213, 139, 0.28);
+}
+
+.virtue-card strong {
+  display: block;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 0.95rem;
+  font-weight: 400;
+}
+
+.virtue-card small {
+  display: block;
+  margin-top: 7px;
+  color: rgba(224, 241, 219, 0.35);
+  font-size: 0.58rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.virtue-message,
+.lantern-message {
+  min-height: 58px;
+  margin-top: 16px;
+  color: rgba(238, 247, 233, 0.72);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 0.9rem;
+  font-style: italic;
+  line-height: 1.55;
+}
+
+.virtue-message p,
+.lantern-message p {
+  margin: 0;
+}
+
+.crown-reveal {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 1s ease, opacity 0.8s ease, margin 0.8s ease;
+}
+
+.crown-reveal.is-visible {
+  max-height: 250px;
+  margin-top: 3px;
+  opacity: 1;
+}
+
+.crown-reveal .line {
+  display: block;
+  width: 100px;
+  height: 1px;
+  margin: 0 auto 12px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+
+.royal-crown {
+  color: var(--gold);
+  font-size: 2.5rem;
+  text-shadow: 0 0 20px rgba(242, 213, 139, 0.48);
+  animation: crownFloat 3s ease-in-out infinite;
+}
+
+.crown-reveal p {
+  margin: 3px 0;
+  color: rgba(231, 245, 225, 0.6);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 0.82rem;
+}
+
+.crown-reveal strong {
+  display: block;
+  color: var(--gold);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.85rem;
+  font-weight: 400;
+  letter-spacing: 0.3em;
+  text-indent: 0.3em;
+}
+
+.crown-reveal em {
+  display: block;
+  max-width: 530px;
+  margin: 5px auto 0;
+  color: rgba(232, 245, 227, 0.58);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 0.78rem;
+  line-height: 1.55;
+}
+
+.lanterns {
+  display: flex;
+  justify-content: center;
+  gap: clamp(22px, 7vw, 72px);
+  margin: 36px 0 20px;
+}
+
+.lantern {
+  position: relative;
+  display: flex;
+  width: 84px;
+  padding: 13px 4px 0;
+  border: 0;
+  flex-direction: column;
+  align-items: center;
+  color: rgba(229, 243, 223, 0.5);
+  background: transparent;
+  cursor: pointer;
+}
+
+.lantern-handle {
+  width: 45px;
+  height: 26px;
+  margin-bottom: -8px;
+  border: 2px solid rgba(159, 175, 151, 0.46);
+  border-bottom: 0;
+  border-radius: 50% 50% 0 0;
+}
+
+.lantern-body {
+  position: relative;
+  display: grid;
+  width: 55px;
+  height: 72px;
+  border: 2px solid #40584b;
+  border-radius: 5px 5px 12px 12px;
+  place-items: center;
+  background: rgba(5, 16, 13, 0.66);
+  box-shadow: inset 0 0 12px rgba(0, 0, 0, 0.4);
+}
+
+.lantern-body::before,
+.lantern-body::after {
+  position: absolute;
+  right: 6px;
+  left: 6px;
+  height: 2px;
+  background: #40584b;
+  content: "";
+}
+
+.lantern-body::before {
+  top: 9px;
+}
+
+.lantern-body::after {
+  bottom: 9px;
+}
+
+.lantern-body i {
+  width: 13px;
+  height: 20px;
+  border-radius: 60% 40% 60% 40%;
+  opacity: 0;
+  background: #ffe39b;
+  box-shadow: 0 0 12px #f4b956, 0 0 25px rgba(242, 213, 139, 0.7);
+  transform: rotate(12deg);
+  transition: opacity 0.5s ease;
+  animation: flame 1.2s ease-in-out infinite alternate;
+}
+
+.lantern.is-lit .lantern-body {
+  border-color: #a8844f;
+  background: rgba(92, 65, 27, 0.3);
+  box-shadow:
+    inset 0 0 22px rgba(244, 185, 86, 0.22),
+    0 0 32px rgba(244, 185, 86, 0.2);
+}
+
+.lantern.is-lit .lantern-body i {
+  opacity: 1;
+}
+
+.lantern.is-lit {
+  color: var(--gold);
+}
+
+.lantern small {
+  margin-top: 10px;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 0.68rem;
+}
+
+.home-card {
+  width: min(760px, 100%);
+}
+
+.path-illustration {
+  position: relative;
+  height: 120px;
+  margin: 0 auto 10px;
+  overflow: hidden;
+}
+
+.path-glow {
+  position: absolute;
+  bottom: -32px;
+  left: 50%;
+  width: 170px;
+  height: 140px;
+  border-radius: 50% 50% 0 0;
+  background: linear-gradient(to top, rgba(242, 213, 139, 0.32), transparent 75%);
+  clip-path: polygon(35% 100%, 46% 0, 54% 0, 66% 100%);
+  transform: translateX(-50%);
+  filter: blur(4px);
+}
+
+.tiny-house {
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  width: 66px;
+  height: 58px;
+  transform: translateX(-50%);
+}
+
+.tiny-house .roof {
+  position: absolute;
+  top: 0;
+  left: 8px;
+  width: 50px;
+  height: 50px;
+  background: #15251e;
+  transform: rotate(45deg);
+}
+
+.tiny-house .walls {
+  position: absolute;
+  right: 8px;
+  bottom: 0;
+  left: 8px;
+  height: 40px;
+  background: #12241c;
+}
+
+.tiny-house .window {
+  position: absolute;
+  right: 20px;
+  bottom: 15px;
+  width: 13px;
+  height: 16px;
+  background: #f4cd75;
+  box-shadow: 0 0 17px #f4cd75;
+}
+
+/* --- 1. THE WANDERER'S TRAIL --- */
+.wanderer-trail {
+  position: absolute;
+  bottom: -35px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50px;
+  height: 80px;
+  z-index: 1;
+}
+
+.trail-path {
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+  filter: drop-shadow(0 0 4px rgba(242, 213, 139, 0.6));
+}
+
+/* The trail draws itself when the scene becomes active */
+.scene[data-scene="5"].is-active .trail-path {
+  animation: walkHome 3.5s ease-out 0.8s forwards;
+}
+
+@keyframes walkHome {
+  to { stroke-dashoffset: 0; }
+}
+
+/* --- 2. THE LIVING HEARTH --- */
+/* The warm fireplace flicker */
+.tiny-house .window.flickering {
+  animation: hearthFlicker 3s ease-in-out infinite alternate;
+  box-shadow: 0 0 15px #f4cd75, 0 0 30px rgba(244, 205, 117, 0.3);
+}
+
+@keyframes hearthFlicker {
+  0%, 100% { opacity: 1; filter: brightness(1); }
+  50% { opacity: 0.85; filter: brightness(0.85); }
+  25%, 75% { opacity: 0.95; filter: brightness(1.1); }
+}
+
+.tiny-house .chimney {
+  position: absolute;
+  top: -10px;
+  right: 14px;
+  width: 8px;
+  height: 16px;
+  background: #0f1c16;
+  z-index: -1;
+}
+
+/* The smoke that turns into hearts */
+.smoke-heart {
+  position: absolute;
+  bottom: 8px;
+  left: -2px;
+  width: 12px;
+  height: 12px;
+  background-color: rgba(225, 241, 218, 0.6);
+  /* Uses a CSS mask to perfectly cut the shape of a heart */
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'/%3E%3C/svg%3E");
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'/%3E%3C/svg%3E");
+  mask-size: contain;
+  mask-repeat: no-repeat;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  
+  opacity: 0;
+  transform: translateY(0) scale(0.5);
+  animation: riseAndLove 4.5s ease-in infinite;
+}
+
+.smoke-heart.delay-1 { animation-delay: 1.5s; left: 2px; }
+.smoke-heart.delay-2 { animation-delay: 3s; left: -4px; }
+
+@keyframes riseAndLove {
+  0% { transform: translateY(0) scale(0.4); opacity: 0; filter: blur(2px); }
+  20% { opacity: 0.7; filter: blur(1px); }
+  50% { transform: translateY(-25px) scale(1) translateX(8px); opacity: 0.5; filter: blur(0px); }
+  100% { transform: translateY(-50px) scale(1.3) translateX(-8px); opacity: 0; filter: blur(3px); }
+}
+
+/* --- 3. THE ROYAL RATIFICATION --- */
+/* --- 3. THE ILLUMINATED OATH (Combined Magic) --- */
+.royal-decree-container {
+  position: relative;
+  max-width: 540px;
+  margin: 28px auto 25px;
+  min-height: 180px; /* Gives the button room to sit */
+}
+
+/* --- THE DELICATE OATH BUTTON --- */
+/* --- THE DELICATE OATH BUTTON --- */
+.oath-btn {
+  position: absolute;
+  bottom: -22px;
+  left: 50%;
+  transform: translateX(-50%); /* Locks it perfectly in the center */
+  z-index: 10;
+  padding: 10px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  white-space: nowrap;
+  color: rgba(242, 213, 139, 0.65);
+  font-family: Georgia, serif;
+  font-size: 0.85rem;
+  font-style: italic;
+  letter-spacing: 0.08em;
+  transition: color 0.3s ease, text-shadow 0.3s ease, transform 0.3s ease, opacity 0.4s ease;
+}
+
+.oath-btn:hover {
+  color: var(--gold);
+  text-shadow: 0 0 10px rgba(242, 213, 139, 0.6);
+  transform: translateX(-50%) scale(1.05); /* A soft magical grow, absolutely NO jumping! */
+}
+
+/* --- THE LOCKED NEXT BUTTON --- */
+.locked-next-btn {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(15px);
+  transition: opacity 1.2s ease, transform 1.2s ease;
+  margin-top: 10px;
+}
+
+/* Added by JavaScript once the oath is signed */
+.locked-next-btn.is-unlocked {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+/* The Shadowed State */
+.royal-decree {
+  margin: 0 !important;
+  transition: filter 1.5s ease, opacity 1.5s ease, box-shadow 1.5s ease, background 1.5s ease;
+}
+
+.royal-decree.is-shadowed {
+  filter: brightness(0.4) sepia(0.3) hue-rotate(20deg);
+  opacity: 0.5;
+  box-shadow: inset 0 0 20px rgba(0,0,0,0.8);
+}
+
+/* The Illuminated State (Firefly Glow) */
+.royal-decree.is-illuminated {
+  filter: brightness(1) sepia(0) hue-rotate(0deg);
+  opacity: 1;
+  background: rgba(31, 55, 42, 0.45);
+  box-shadow: 
+    0 0 30px rgba(242, 213, 139, 0.15), 
+    inset 0 0 40px rgba(242, 213, 139, 0.1);
+  animation: fireflyBreathe 4s ease-in-out infinite alternate;
+}
+
+@keyframes fireflyBreathe {
+  0% { box-shadow: 0 0 25px rgba(242, 213, 139, 0.1), inset 0 0 30px rgba(242, 213, 139, 0.05); }
+  100% { box-shadow: 0 0 45px rgba(242, 213, 139, 0.25), inset 0 0 50px rgba(242, 213, 139, 0.15); }
+}
+
+/* The Golden Signature */
+.golden-signature {
+  margin-top: 18px;
+  padding-top: 15px;
+  border-top: 1px dashed rgba(242, 213, 139, 0.15);
+  color: rgba(232, 245, 227, 0.5);
+  font-family: Georgia, serif;
+  font-size: 0.75rem;
+  font-style: italic;
+  text-align: right;
+  
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.signature-name {
+  display: inline-block;
+  color: var(--gold);
+  font-size: 1.8rem;
+  line-height: 1.2;
+  margin-top: 4px;
+  padding-right: 10px;
+  text-shadow: 0 0 12px rgba(242, 213, 139, 0.6);
+  
+  /* The ink writing effect mask */
+  clip-path: polygon(0 0, 0 0, 0 100%, 0 100%);
+  transition: clip-path 1.5s cubic-bezier(0.4, 0, 0.2, 1) 0.4s;
+}
+
+/* Triggered when the light blooms */
+.golden-signature.is-signed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.golden-signature.is-signed .signature-name {
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+}
+
+.home-copy {
+  width: min(610px, 100%);
+}
+
+.home-truth {
+  margin-top: 22px;
+  color: rgba(244, 248, 228, 0.88);
+  font-size: 1.08rem;
+}
+
+.home-truth strong {
+  color: var(--gold);
+  font-size: 1.16rem;
+}
+
+.royal-decree {
+  position: relative;
+  max-width: 540px;
+  margin: 28px auto 25px;
+  padding: 17px 22px;
+  border: 1px solid rgba(242, 213, 139, 0.25);
+  color: rgba(236, 246, 231, 0.74);
+  background: rgba(31, 55, 42, 0.32);
+}
+
+.royal-decree > span {
+  color: var(--gold);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.royal-decree p {
+  margin: 7px 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 0.86rem;
+  line-height: 1.45;
+}
+
+.royal-decree small {
+  color: rgba(232, 245, 227, 0.38);
+  font-size: 0.61rem;
+  font-style: italic;
+}
+
+.final-letter {
+  position: relative;
+  width: min(720px, 100%);
+  margin: auto;
+  padding: clamp(34px, 6vw, 65px);
+  color: var(--ink);
+  text-align: left;
+  background:
+    radial-gradient(circle at 16% 14%, rgba(116, 89, 46, 0.05) 0 1px, transparent 2px),
+    radial-gradient(circle at 80% 74%, rgba(116, 89, 46, 0.04) 0 1px, transparent 2px),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.28), transparent 45%),
+    var(--paper);
+  background-size: 39px 39px, 51px 51px, auto, auto;
+  border-radius: 2px;
+  box-shadow:
+    0 30px 90px rgba(0, 0, 0, 0.55),
+    inset 0 0 80px rgba(118, 88, 38, 0.06);
+  transform: rotate(-0.3deg);
+}
+
+.final-letter::before {
+  position: absolute;
+  inset: 11px;
+  border: 1px solid rgba(103, 76, 35, 0.17);
+  pointer-events: none;
+  content: "";
+}
+
+.letter-corner {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  border-color: rgba(103, 76, 35, 0.24);
+}
+
+.corner-one {
+  top: 22px;
+  left: 22px;
+  border-top: 1px solid;
+  border-left: 1px solid;
+}
+
+.corner-two {
+  right: 22px;
+  bottom: 22px;
+  border-right: 1px solid;
+  border-bottom: 1px solid;
+}
+
+.letter-date {
+  color: #8a672d;
+}
+
+.final-letter h2 {
+  margin-bottom: 24px;
+  color: #19382e;
+  font-size: clamp(2.15rem, 5vw, 3.4rem);
+}
+
+.letter-body {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(0.88rem, 1.7vw, 0.98rem);
+  line-height: 1.72;
+}
+
+.letter-body p {
+  margin: 0 0 14px;
+}
+
+.letter-promise {
+  padding-top: 6px;
+  color: #315e4d;
+  font-size: 1.03em;
+  font-style: italic;
+}
+
+.signature {
+  margin: 25px 0 0;
+  color: #8b3e4b;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.2rem;
+  font-style: italic;
+}
+
+.signature span {
+  display: block;
+  margin-top: 4px;
+  color: #54685f;
+  font-size: 0.78rem;
+}
+
+.birthday-countdown {
+  margin: 20px 0 0;
+  padding-top: 14px;
+  border-top: 1px solid rgba(72, 91, 80, 0.16);
+  color: #66766d;
+  font-size: 0.64rem;
+  font-weight: 700;
+  letter-spacing: 0.11em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.birthday-countdown strong {
+  color: #8a672d;
+}
+
+.seal-button {
+  display: flex;
+  margin: 25px auto 0;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: #6f5841;
+  background: transparent;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.wax-seal {
+  display: grid;
+  width: 55px;
+  aspect-ratio: 1;
+  border: 3px double rgba(255, 228, 203, 0.35);
+  border-radius: 47% 53% 49% 51%;
+  place-items: center;
+  color: #efd0b2;
+  background: #963c49;
+  box-shadow:
+    inset -4px -6px 10px rgba(65, 8, 17, 0.22),
+    0 6px 13px rgba(61, 34, 20, 0.22);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.45rem;
+  text-transform: none;
+  transition: transform 0.25s ease;
+}
+
+.seal-button:hover .wax-seal {
+  transform: rotate(-7deg) scale(1.05);
+}
+
+.scene-wish {
+  align-content: center;
+  background: radial-gradient(circle at 50% 45%, rgba(59, 126, 92, 0.16), transparent 35%);
+}
+
+.scene-wish h2 {
+  color: #fbf5ce;
+  font-size: clamp(3.2rem, 9vw, 7rem);
+  line-height: 0.9;
+  text-shadow: 0 0 45px rgba(242, 213, 139, 0.24);
+}
+
+.scene-wish > p:not(.eyebrow) {
+  color: rgba(237, 248, 232, 0.75);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  font-style: italic;
+  line-height: 1.7;
+}
+
+.final-crown {
+  margin: 12px 0 20px;
+  color: var(--gold);
+  font-size: 4rem;
+  text-shadow: 0 0 25px rgba(242, 213, 139, 0.7);
+  animation: crownFloat 3s ease-in-out infinite;
+}
+
+.pocket-spell-button {
+  display: block;
+  margin: 0 auto;
+}
+
+.pocket-spell {
+  width: min(520px, 100%);
+  max-height: 0;
+  margin: 0 auto;
+  padding: 0 24px;
+  overflow: hidden;
+  border: 1px solid transparent;
+  border-radius: 3px 24px 3px 24px;
+  opacity: 0;
+  color: rgba(237, 248, 232, 0.75);
+  background: rgba(8, 30, 25, 0.72);
+  backdrop-filter: blur(14px);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 0.9rem;
+  line-height: 1.65;
+  transition:
+    max-height 0.8s ease,
+    margin 0.8s ease,
+    padding 0.8s ease,
+    opacity 0.6s ease,
+    border-color 0.6s ease;
+}
+
+.pocket-spell.is-visible {
+  max-height: 280px;
+  margin-top: 18px;
+  padding: 22px 24px;
+  border-color: rgba(242, 213, 139, 0.25);
+  opacity: 1;
+  box-shadow: inset 0 0 40px rgba(242, 213, 139, 0.035);
+}
+
+.pocket-spell p {
+  margin: 0 0 10px;
+}
+
+.pocket-spell .spell-title {
+  margin-bottom: 8px;
+  color: var(--gold);
+  font-size: 0.64rem;
+  font-family: "Segoe UI", "Trebuchet MS", sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.pocket-spell strong {
+  color: #f5e6aa;
+  font-weight: 400;
+  font-style: italic;
+}
+
+.replay-button {
+  display: block;
+  margin: 14px auto 0;
+  color: rgba(242, 213, 139, 0.75);
+}
+
+.story-progress {
+  position: fixed;
+  z-index: 15;
+  right: 0;
+  bottom: 25px;
+  left: 0;
+  width: min(360px, calc(100% - 44px));
+  margin: auto;
+  transition: opacity 0.5s ease;
+}
+
+.story-progress.is-hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.progress-line {
+  position: absolute;
+  z-index: -1;
+  top: 50%;
+  right: 12px;
+  left: 12px;
+  height: 1px;
+  overflow: hidden;
+  background: rgba(225, 241, 218, 0.14);
+}
+
+.progress-line i {
+  display: block;
+  width: 0;
+  height: 100%;
+  background: linear-gradient(90deg, var(--mint), var(--gold));
+  box-shadow: 0 0 8px var(--gold);
+  transition: width 0.8s ease;
+}
+
+.story-progress ol {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  justify-content: space-between;
+  list-style: none;
+}
+
+.story-progress li {
+  display: grid;
+  width: 22px;
+  aspect-ratio: 1;
+  border: 1px solid rgba(226, 242, 219, 0.2);
+  border-radius: 50%;
+  place-items: center;
+  background: #09201b;
+  transition: border-color 0.4s ease, box-shadow 0.4s ease, transform 0.4s ease;
+}
+
+.story-progress li span {
+  color: rgba(232, 246, 226, 0.38);
+  font-size: 0.55rem;
+}
+
+.story-progress li.is-current,
+.story-progress li.is-complete {
+  border-color: var(--gold);
+  box-shadow: 0 0 12px rgba(242, 213, 139, 0.22);
+}
+
+.story-progress li.is-current {
+  transform: scale(1.18);
+}
+
+.story-progress li.is-current span,
+.story-progress li.is-complete span {
+  color: var(--gold);
+}
+
+.spark {
+  position: fixed;
+  z-index: 30;
+  width: 5px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  pointer-events: none;
+  background: var(--gold);
+  box-shadow: 0 0 10px var(--gold);
+  animation: sparkFly 1s ease-out forwards;
+}
+
+.spark.heart-spark {
+  background: none !important;
+  box-shadow: none !important;
+  color: var(--rose);
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-shadow: 0 0 8px rgba(216, 132, 143, 0.8);
+}
+
+.spark.heart-spark::before {
+  content: "❤";
+}
+
+@keyframes orbit {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes starDrift {
+  to { background-position: 93px 93px, -89px 191px; }
+}
+
+@keyframes aurora {
+  from { transform: translateX(-3%) rotate(-7deg) scale(0.9); }
+  to { transform: translateX(12%) rotate(5deg) scale(1.1); }
+}
+
+@keyframes mistMove {
+  from { transform: translateX(-7%) scaleX(0.9); }
+  to { transform: translateX(8%) scaleX(1.06); }
+}
+
+@keyframes shimmer {
+  0%, 65% { left: -30%; }
+  85%, 100% { left: 120%; }
+}
+
+/* @keyframes soundPulse {
+  50% { text-shadow: 0 0 11px var(--gold); transform: scale(1.1); }
+} */
+
+@keyframes crownFloat {
+  50% { transform: translateY(-6px); }
+}
+
+@keyframes flame {
+  from { transform: rotate(8deg) scale(0.92); }
+  to { transform: rotate(-7deg) scale(1.08); }
+}
+
+@keyframes sparkFly {
+  to {
+    opacity: 0;
+    transform: translate(var(--x), var(--y)) scale(0);
+  }
+}
+
+
+/* Chapter IV — Constellation Mode Styling */
+.constellation-card {
+  overflow: visible !important;
+}
+
+.constellation-container {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 8;
+  margin: 24px auto;
+  
+  /* --- NEW STARRY BACKGROUND --- */
+  background:
+    /* Layering tiny, faint dots of different sizes and opacities */
+    radial-gradient(1px 1px at 15% 25%, rgba(232, 247, 215, 0.45) 100%, transparent),
+    radial-gradient(1.5px 1.5px at 35% 75%, rgba(242, 213, 139, 0.35) 100%, transparent),
+    radial-gradient(1px 1px at 55% 15%, rgba(232, 247, 215, 0.5) 100%, transparent),
+    radial-gradient(2px 2px at 75% 65%, rgba(242, 213, 139, 0.25) 100%, transparent),
+    radial-gradient(1px 1px at 85% 20%, rgba(232, 247, 215, 0.4) 100%, transparent),
+    radial-gradient(1px 1px at 10% 80%, rgba(242, 213, 139, 0.3) 100%, transparent),
+    radial-gradient(1.5px 1.5px at 45% 45%, rgba(232, 247, 215, 0.2) 100%, transparent),
+    radial-gradient(1px 1px at 92% 85%, rgba(242, 213, 139, 0.45) 100%, transparent),
+    radial-gradient(1px 1px at 65% 35%, rgba(232, 247, 215, 0.35) 100%, transparent),
+    /* The original deep green base color */
+    rgba(4, 15, 13, 0.42);
+    
+  /* Repeating the pattern to cover the whole canvas */
+  background-size: 140px 140px; 
+  
+  border: 1px dashed rgba(198, 238, 205, 0.12);
+  border-radius: 12px;
+  box-shadow: inset 0 0 35px rgba(2, 8, 7, 0.8);
+  touch-action: none;
+}
+
+.constellation-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 4;
+}
+
+.constellation-stars {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 5;
+}
+
+/* --- NEW STAR STYLES --- */
+.constellation-star {
+  position: absolute;
+  width: 36px; /* Keeps the click/touch area large */
+  height: 36px;
+  background: transparent;
+  border: none;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+  z-index: 10;
+  transition: left 1.4s cubic-bezier(0.25, 1, 0.5, 1), top 1.4s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.constellation-star::before {
+  content: "✦"; /* Magical 4-point star character */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 14px;
+  color: rgba(232, 247, 215, 0.6);
+  text-shadow: 0 0 6px rgba(232, 247, 215, 0.4);
+  transition: color 0.4s ease, text-shadow 0.4s ease, font-size 0.4s ease, transform 0.4s ease;
+}
+
+/* Remove the old ::after touch target since the parent is now the large target */
+.constellation-star::after {
+  display: none;
+}
+
+.constellation-star:hover::before {
+  transform: translate(-50%, -50%) scale(1.3);
+  color: var(--gold);
+  text-shadow: 0 0 12px var(--gold);
+}
+
+.constellation-star.is-pulse-start::before {
+  color: var(--gold);
+  text-shadow: 0 0 14px var(--gold);
+  animation: starPulseGlow 1.2s ease-in-out infinite alternate;
+}
+
+.constellation-star.is-next::before {
+  color: rgba(242, 213, 139, 0.85);
+  text-shadow: 0 0 10px rgba(242, 213, 139, 0.6);
+  animation: starPulseGlow 1.6s ease-in-out infinite alternate;
+}
+
+.constellation-star.is-lit::before {
+  color: var(--gold);
+  text-shadow: 0 0 14px var(--gold), 0 0 24px rgba(242, 213, 139, 0.5);
+  font-size: 20px;
+}
+
+.constellation-star.is-morphed::before {
+  color: var(--rose);
+  text-shadow: 0 0 14px var(--rose), 0 0 24px rgba(216, 132, 143, 0.5);
+  font-size: 20px;
+}
+
+.constellation-star.is-error::before {
+  color: var(--rose);
+  text-shadow: 0 0 18px var(--rose);
+  animation: starShake 0.4s ease-in-out;
+}
+
+/* Glowing Line Connections */
+.constellation-line {
+  stroke: transparent; /* This hides them before connection */
+  stroke-width: 1px;
+  transition: stroke 0.4s, stroke-width 0.4s;
+}
+
+.constellation-line.is-active {
+  stroke: var(--gold);
+  stroke-width: 2px;
+  filter: drop-shadow(0 0 4px var(--gold));
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  animation: drawLine 0.9s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.constellation-line.is-morphed {
+  stroke: var(--rose);
+  stroke-width: 2px;
+  filter: drop-shadow(0 0 4px var(--rose));
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  animation: drawLine 1.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* Easter Egg Anniversary Star */
+.easter-egg-star {
+  position: absolute;
+  top: 12%;
+  right: 10%;
+  background: none;
+  border: none;
+  font-size: 1.25rem;
+  color: var(--gold);
+  cursor: pointer;
+  padding: 6px;
+  z-index: 12;
+  transition: transform 0.3s ease, text-shadow 0.3s ease;
+  animation: eggFloatPulse 2s ease-in-out infinite alternate;
+}
+
+.easter-egg-star:hover {
+  transform: scale(1.3);
+  text-shadow: 0 0 12px var(--gold);
+}
+
+.easter-egg-tooltip {
+  position: absolute;
+  top: 25%;
+  right: 6%;
+  background: rgba(6, 28, 23, 0.96);
+  border: 1px solid var(--gold);
+  border-radius: 8px;
+  padding: 8px 14px;
+  color: var(--gold);
+  font-size: 0.78rem;
+  line-height: 1.4;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.6);
+  z-index: 20;
+}
+
+.easter-egg-tooltip.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.easter-egg-tooltip strong {
+  display: block;
+  font-size: 0.82rem;
+  color: #fff;
+  margin-bottom: 2px;
+}
+
+/* Reveals & Secret Message */
+.constellation-reveal-message {
+  margin-top: 20px;
+}
+
+.quote-text {
+  font-family: Georgia, serif;
+  font-style: italic;
+  font-size: clamp(1.05rem, 2.2vw, 1.32rem);
+  line-height: 1.75;
+  color: rgba(236, 248, 231, 0.95);
+  max-width: 520px;
+  margin: 0 auto 20px;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 1.5s ease, transform 1.5s ease;
+}
+
+.quote-text.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.read-refused-button {
+  margin: 20px auto;
+  animation: buttonFadeIn 0.8s ease-out;
+}
+/* --- THE NEW HIDDEN NOTE BUTTON --- */
+.hidden-note-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin: 20px auto;
+  background: transparent;
+  border: none;
+  color: rgba(242, 213, 139, 0.7);
+  font-family: Georgia, serif;
+  font-style: italic;
+  font-size: 0.9rem;
+  cursor: pointer;
+  animation: floatNote 3s ease-in-out infinite alternate, buttonFadeIn 1s ease-out;
+  transition: transform 0.3s ease, opacity 0.3s ease, filter 0.3s ease;
+}
+
+.hidden-note-btn:hover {
+  color: var(--gold);
+  transform: scale(1.1);
+  filter: drop-shadow(0 0 15px rgba(242, 213, 139, 0.6));
+}
+
+.hidden-note-icon {
+  font-size: 2rem;
+  color: #dfd2b0;
+  filter: drop-shadow(0 4px 6px rgba(0,0,0,0.6));
+}
+
+@keyframes floatNote {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-6px); }
+}
+
+/* --- THE HIDDEN PAPER REVEAL --- */
+.secret-message {
+  max-width: 400px; /* Slightly narrower like a real slip of paper */
+  margin: 24px auto 0;
+  padding: 0;
+  
+  /* Vintage parchment paper aesthetic */
+  background: linear-gradient(135deg, #fdfaf3 0%, #ede0c4 100%);
+  border: 1px solid #d4c5a9;
+  border-radius: 2px 18px 3px 15px; /* Organic folded paper corners */
+  
+  font-family: Georgia, serif;
+  font-style: italic;
+  font-size: clamp(0.92rem, 1.9vw, 1.1rem);
+  line-height: 1.9;
+  color: #162b21; /* Deep forest-green ink */
+  text-align: center;
+  
+  opacity: 0;
+  height: 0;
+  overflow: hidden;
+  
+  /* Starts folded away, tilted, and slightly shrunk */
+  transform: rotate(-5deg) translateY(20px) scale(0.95);
+  
+  transition: 
+    opacity 1s ease, 
+    height 1.5s cubic-bezier(0.25, 1, 0.5, 1), 
+    padding 1s ease,
+    transform 1.5s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.secret-message.is-visible {
+  opacity: 1;
+  height: auto;
+  padding: 40px 28px;
+  /* Swings down into a natural resting position */
+  transform: rotate(1.5deg) translateY(0) scale(1);
+  box-shadow: 
+    0 25px 40px rgba(0,0,0,0.7),
+    inset 0 0 50px rgba(118, 88, 38, 0.08);
+}
+
+/* --- INVISIBLE INK ANIMATION --- */
+/* --- MAGICAL QUILL & WET INK STYLES --- */
+
+/* The ink text */
+#typedPoem {
+  display: inline;
+  /* Adds a tiny blur to the text to make it look like wet ink bleeding into paper */
+  text-shadow: 0 0 1px rgba(22, 43, 33, 0.4); 
+}
+
+/* The feather pen */
+.magic-quill {
+  display: inline-block;
+  font-size: 1.4rem;
+  margin-left: 4px;
+  transform-origin: bottom left;
+  /* The scribble animation */
+  animation: scribble 0.12s infinite alternate;
+  transition: opacity 1s ease;
+  filter: drop-shadow(0 4px 4px rgba(0,0,0,0.3));
+}
+
+/* Simulates the rapid up, down, and tilt of writing */
+@keyframes scribble {
+  0% { transform: translateY(0) rotate(0deg) scaleX(1); }
+  100% { transform: translateY(-4px) rotate(-12deg) scaleX(0.9); }
+}
+
+/* Animations */
+@keyframes starPulseGlow {
+  from {
+    transform: translate(-50%, -50%) scale(0.9);
+    text-shadow: 0 0 5px rgba(242, 213, 139, 0.4);
+  }
+  to {
+    transform: translate(-50%, -50%) scale(1.3);
+    text-shadow: 0 0 16px rgba(242, 213, 139, 0.9);
+  }
+}
+@keyframes eggFloatPulse {
+  0% {
+    transform: translateY(0) scale(1);
+    text-shadow: 0 0 6px rgba(242, 213, 139, 0.4);
+  }
+  50% {
+    transform: translateY(-4px) scale(1.1);
+    text-shadow: 0 0 14px rgba(242, 213, 139, 0.8);
+  }
+  100% {
+    transform: translateY(0) scale(1);
+    text-shadow: 0 0 6px rgba(242, 213, 139, 0.4);
+  }
+}
+
+@keyframes starShake {
+  0%, 100% { transform: translate(-50%, -50%) translateX(0); }
+  20%, 60% { transform: translate(-50%, -50%) translateX(-4px); }
+  40%, 80% { transform: translate(-50%, -50%) translateX(4px); }
+}
+
+@keyframes drawLine {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes buttonFadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+
+/* Royal Messenger Scene & Wax Seal Break Styles */
+.messenger-card {
+  max-width: 520px;
+}
+
+.messenger-scene {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+}
+
+.messenger-lead {
+  font-family: Georgia, serif;
+  font-style: italic;
+  font-size: clamp(1.15rem, 2.4vw, 1.45rem);
+  color: #edf8e9;
+  margin: 0;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.messenger-sub {
+  font-size: 0.85rem;
+  color: var(--mint);
+  opacity: 0.8;
+  margin: 0;
+  letter-spacing: 0.05em;
+}
+
+.pedestal-container {
+  position: relative;
+  width: 100%;
+  height: 220px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  margin: 20px 0;
+}
+
+.stone-pedestal {
+  width: 130px;
+  height: 60px;
+  background: linear-gradient(180deg, #102e26 0%, #061511 100%);
+  border: 2px solid rgba(198, 238, 205, 0.15);
+  border-bottom: none;
+  border-radius: 8px 8px 0 0;
+  box-shadow: 
+    0 -5px 15px rgba(0, 0, 0, 0.5),
+    inset 0 2px 5px rgba(198, 238, 205, 0.1);
+  position: relative;
+  z-index: 1;
+}
+
+.stone-pedestal::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 10%;
+  right: 10%;
+  height: 2px;
+  background: rgba(242, 213, 139, 0.2);
+  filter: blur(1px);
+}
+/* --- THE 3D ENVELOPE STRUCTURE --- */
+.sealed-parchment {
+  position: absolute;
+  bottom: 45px;
+  width: 190px;
+  height: 120px;
+  background-color: #dfd2b0;
+  border-radius: 4px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.65), 0 0 15px rgba(242, 213, 139, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transform-style: preserve-3d;
+  perspective: 1200px;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  z-index: 2;
+}
+
+.sealed-parchment:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.8), 0 0 25px rgba(242, 213, 139, 0.25);
+}
+
+/* The top flap that will fold open */
+.envelope-flap-top {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 65px;
+  background: #d4c59d;
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  transform-origin: top center;
+  z-index: 4;
+  filter: drop-shadow(0 3px 4px rgba(0,0,0,0.25));
+}
+
+/* The bottom structural flaps */
+.envelope-flaps-bottom {
+  position: absolute;
+  bottom: 0; left: 0; width: 0; height: 0;
+  border-left: 95px solid #eaddbf;
+  border-right: 95px solid #eaddbf;
+  border-bottom: 75px solid #e2d4ae;
+  border-top: 45px solid transparent;
+  border-radius: 0 0 4px 4px;
+  z-index: 3;
+}
+
+/* The dummy letter hiding inside */
+.hidden-letter-pull {
+  position: absolute;
+  bottom: 5px;
+  width: 170px;
+  height: 110px;
+  background: var(--paper);
+  border-radius: 2px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+  z-index: 2; /* Starts behind flaps */
+  transform: translateY(0);
+  background-image: repeating-linear-gradient(180deg, transparent, transparent 15px, rgba(14, 48, 40, 0.04) 16px);
+}
+
+/* Crack Split Animations */
+/* --- DRAMATIC SEAL BREAK --- */
+/* --- EPIC 3D SEAL BREAK & EXTRACTION --- */
+
+/* --- THE WAX SEAL & 3D PHYSICS --- */
+.royal-wax-seal {
+  position: relative;
+  width: 68px;
+  aspect-ratio: 1;
+  cursor: pointer;
+  z-index: 10;
+  
+  /* 3D context so halves can fly */
+  transform-style: preserve-3d;
+  perspective: 800px;
+  
+  /* CRUCIAL FIX: Pulls the seal completely off the paper so it doesn't get swallowed! */
+  transform: translateZ(20px); 
+  
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.45));
+  transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.royal-wax-seal:hover {
+  /* Must maintain translateZ when hovering */
+  transform: translateZ(20px) scale(1.08);
+}
+
+/* Intense Rumble Before Snap */
+.royal-wax-seal.is-glowing {
+  animation: sealSnapRumble 0.3s ease-in-out infinite;
+  filter: drop-shadow(0 0 25px rgba(242, 213, 139, 1)) drop-shadow(0 -4px 15px rgba(216, 132, 143, 0.8));
+}
+
+@keyframes sealSnapRumble {
+  0%, 100% { transform: translateZ(20px) scale(1); }
+  25% { transform: translateZ(20px) scale(1.05) rotate(3deg); }
+  50% { transform: translateZ(20px) scale(1.05) rotate(-3deg); }
+  75% { transform: translateZ(20px) scale(1.05) rotate(3deg); }
+}
+
+/* Seal Halves */
+.seal-half {
+  position: absolute;
+  top: 0; bottom: 0; width: 50%;
+  background: radial-gradient(circle at center, #ba1e2d 0%, #7d0d17 100%);
+  border: 3px solid #5a0910;
+  overflow: hidden;
+  box-sizing: border-box;
+  transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.8s ease;
+}
+
+.seal-half.left { left: 0; border-right: none; border-radius: 34px 0 0 34px; }
+.seal-half.right { right: 0; border-left: none; border-radius: 0 34px 34px 0; }
+
+/* Seal Monograms */
+.seal-monogram-left, .seal-monogram-right {
+  position: absolute; top: 50%;
+  font-family: Georgia, "Times New Roman", serif; font-size: 2.1rem; font-weight: 700;
+  color: var(--gold); text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+  pointer-events: none; line-height: 1;
+}
+.seal-monogram-left { right: 0; transform: translate(50%, -50%); }
+.seal-monogram-right { left: 0; transform: translate(-50%, -50%); }
+
+.seal-crest {
+  position: absolute; top: 7px; left: 50%; transform: translateX(-50%);
+  color: rgba(242, 213, 139, 0.55); font-size: 0.75rem;
+  pointer-events: none; transition: opacity 0.3s ease;
+}
+
+/* --- EPIC 3D SHATTER & EXTRACTION --- */
+.royal-wax-seal.is-cracked .seal-half.left {
+  transform: translate3d(-140px, -60px, 150px) rotateX(85deg) rotateY(-65deg) rotateZ(-120deg) scale(0.2);
+  opacity: 0;
+  transition: transform 0.6s cubic-bezier(0.1, 1, 0.2, 1), opacity 0.4s ease 0.15s;
+}
+
+.royal-wax-seal.is-cracked .seal-half.right {
+  transform: translate3d(140px, -60px, 150px) rotateX(85deg) rotateY(65deg) rotateZ(120deg) scale(0.2);
+  opacity: 0;
+  transition: transform 0.6s cubic-bezier(0.1, 1, 0.2, 1), opacity 0.4s ease 0.15s;
+}
+
+.royal-wax-seal.is-cracked .seal-crest {
+  transform: translateX(-50%) translateY(-20px) scale(15);
+  color: #ffffff;
+  text-shadow: 0 0 20px var(--gold), 0 0 40px #ffffff;
+  opacity: 0;
+  filter: blur(4px);
+  transition: transform 0.4s ease-out, opacity 0.4s ease-out;
+}
+
+/* Flap Opens & Letter Extracts */
+.sealed-parchment.is-opened .envelope-flap-top {
+  transform: rotateX(175deg); /* Folds backward */
+  background: #c3b48b; /* Darkens slightly inside */
+  transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1) 0.3s, background 0.6s ease 0.3s;
+}
+
+.sealed-parchment.is-opened .hidden-letter-pull {
+  animation: slideLetterOut 1.8s cubic-bezier(0.4, 0, 0.2, 1) 0.7s forwards;
+}
+
+@keyframes slideLetterOut {
+  0% { transform: translateY(0) scale(1); z-index: 2; }
+  10% { z-index: 5; } /* Pops above the flaps as it slides up */
+  35%, 55% { transform: translateY(-75px) scale(1.05); z-index: 5; box-shadow: 0 20px 40px rgba(0,0,0,0.6); }
+  100% { transform: translateY(-30px) scale(5.5); opacity: 0; z-index: 5; filter: blur(5px); }
+}
+
+.pulse-hint {
+  animation: textPulse 2s infinite alternate;
+}
+
+@keyframes textPulse {
+  0% { opacity: 0.3; }
+  100% { opacity: 1; text-shadow: 0 0 8px rgba(185, 229, 199, 0.4); }
+}
+
+.seal-break-btn {
+  margin-top: 10px;
+}
+
+/* Progressive Letter Fade-in */
+/* --- THE EVERLIGHT INK REVEAL --- */
+
+.magic-ink-text {
+  opacity: 0;
+}
+
+.magic-ink-text.is-visible {
+  animation: magicInkCoolDown 3s ease-out forwards;
+}
+
+/* We assign the specific final colors so the animation knows what ink to cool down into */
+.letter-date { --final-ink: #8a672d; }
+.letter-title { --final-ink: #19382e; }
+.letter-body p { --final-ink: var(--ink); }
+.letter-promise { --final-ink: #315e4d; }
+.signature { --final-ink: #8b3e4b; }
+.birthday-countdown { --final-ink: #66766d; }
+
+@keyframes magicInkCoolDown {
+  0% {
+    opacity: 0;
+    filter: blur(6px);
+    color: var(--gold);
+    text-shadow: 0 0 20px var(--gold), 0 0 40px #fff;
+    transform: translateY(12px);
+  }
+  20% {
+    opacity: 1;
+    filter: blur(1px);
+    color: var(--gold);
+    text-shadow: 0 0 10px var(--gold);
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 1;
+    filter: blur(0);
+    color: var(--final-ink);
+    text-shadow: none;
+    transform: translateY(0);
+  }
+}
+
+/* Ensure the corners and final button fade in elegantly without changing colors */
+.letter-corner { 
+  opacity: 0; 
+  transition: opacity 2s ease; 
+}
+.seal-button { 
+  opacity: 0; 
+  transform: translateY(15px);
+  transition: opacity 2s ease, transform 2s ease; 
+}
+
+.letter-corner.is-visible, 
+.seal-button.is-visible { 
+  opacity: 1; 
+  transform: translateY(0);
+}
+
+@media (max-width: 720px) {
+  .constellation-container {
+    aspect-ratio: 4 / 3;
+    margin: 18px auto;
+  }
+  .easter-egg-tooltip {
+    right: 5%;
+    top: 20%;
+  }
+  .secret-message {
+    padding: 16px;
+  }
+}
+
+@media (max-width: 720px) {
+  .scene {
+    display: block;
+    padding: 84px 15px 94px;
+  }
+
+  .scene-intro,
+  .scene-wish {
+    display: grid;
+  }
+
+  .chapter-card {
+    margin: auto;
+    padding: 31px 20px;
+    border-radius: 3px 24px 3px 24px;
+  }
+
+  .virtue-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .virtue-card {
+    min-height: 128px;
+  }
+
+  .virtue-symbol {
+    width: 45px;
+    font-size: 1.4rem;
+  }
+
+  .lanterns {
+    gap: 10px;
+  }
+
+  .lantern {
+    width: 76px;
+  }
+
+  .final-letter {
+    padding: 43px 28px;
+  }
+
+  .sound-toggle {
+    top: 14px;
+    right: 14px;
+  }
+
+  .sound-label {
+    display: none;
+  }
+}
+
+@media (max-width: 420px) {
+  h1 {
+    font-size: 3.6rem;
+  }
+
+  .intro-sigil {
+    width: 68px;
+  }
+
+  .story-copy {
+    font-size: 0.91rem;
+  }
+
+  .royal-decree {
+    padding: 15px 13px;
+  }
+
+  .letter-body {
+    font-size: 0.84rem;
+    line-height: 1.64;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* 1. Make the envelope hoverable to show it's clickable */
+.sealed-parchment {
+  /* ... keep your existing properties (position, width, background, etc) ... */
+  cursor: pointer;
+  transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.4s ease, opacity 0.6s ease;
+}
+
+.sealed-parchment:hover {
+  transform: translateY(-5px);
+  box-shadow: 
+    0 15px 30px rgba(0, 0, 0, 0.8),
+    0 0 25px rgba(242, 213, 139, 0.25);
+}
+
+
+
+/* --- SCENE 7 SEAMLESS LANDING SYNC --- */
+.scene[data-scene="7"].is-active .final-letter {
+  opacity: 0; 
+  /* Completes the illusion of the zoom from Scene 6 */
+  animation: letterSettleDown 1.5s cubic-bezier(0.2, 0.9, 0.2, 1) forwards;
+}
+
+@keyframes letterSettleDown {
+  0% {
+    transform: scale(2.5) translateY(20px);
+    opacity: 0;
+    filter: blur(8px);
+    box-shadow: 0 0 0 rgba(0,0,0,0);
+  }
+  100% {
+    transform: scale(1) translateY(0) rotate(-0.3deg);
+    opacity: 1;
+    filter: blur(0px);
+    box-shadow: 0 30px 90px rgba(0, 0, 0, 0.55), inset 0 0 80px rgba(118, 88, 38, 0.06);
+  }
+}
+
+/* --- CINEMATIC PORTAL ENTRY (SCENE 0) --- */
+
+/* The Title Breathing Glow */
+#introTitle {
+  animation: titleBreathe 4s ease-in-out infinite alternate;
+}
+
+@keyframes titleBreathe {
+  0% { text-shadow: 0 4px 35px rgba(218, 246, 207, 0.1); }
+  100% { text-shadow: 0 0 35px rgba(242, 213, 139, 0.7), 0 0 70px rgba(242, 213, 139, 0.3); }
+}
+
+/* The 3D Fly-Through when clicking Enter */
+.scene-intro.is-leaving {
+  perspective: 1000px;
+  transform-style: preserve-3d;
+}
+
+/* The Sigil winds up and explodes outward */
+.scene-intro.is-leaving .intro-sigil {
+  animation: sigilExplode 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+/* The Title flies directly through the camera */
+.scene-intro.is-leaving #introTitle {
+  animation: flyPastTitle 0.9s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* The secondary elements drop away smoothly */
+.scene-intro.is-leaving .intro-copy,
+.scene-intro.is-leaving .eyebrow,
+.scene-intro.is-leaving .small-note,
+.scene-intro.is-leaving .magic-button {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+@keyframes sigilExplode {
+  0% { transform: scale(1) rotate(0deg); opacity: 1; }
+  30% { transform: scale(0.8) rotate(-45deg); opacity: 1; } /* Pulls back to anticipate */
+  100% { transform: scale(5) rotate(180deg); opacity: 0; filter: blur(10px); }
+}
+
+@keyframes flyPastTitle {
+  0% { transform: scale(1) translateZ(0); opacity: 1; }
+  100% { transform: scale(3.5) translateZ(300px); opacity: 0; filter: blur(12px); }
+}

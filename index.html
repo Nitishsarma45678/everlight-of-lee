@@ -1,0 +1,392 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#071b1b">
+  <meta name="description" content="An enchanted birthday story for Leela.">
+  <title>The Everlight of Leela</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <canvas id="fireflies" aria-hidden="true"></canvas>
+
+  <div class="world" aria-hidden="true">
+    <div class="aurora aurora-one"></div>
+    <div class="aurora aurora-two"></div>
+    <div class="stars"></div>
+    <div class="moon"></div>
+    <div class="far-trees"></div>
+    <div class="near-trees"></div>
+    <div class="mist mist-one"></div>
+    <div class="mist mist-two"></div>
+  </div>
+
+<button class="sound-toggle" id="soundToggle" type="button" aria-pressed="false">
+    <span class="sound-magic" aria-hidden="true">
+      <span class="magic-star">✦</span>
+      <span class="magic-ripple ripple-one"></span>
+      <span class="magic-ripple ripple-two"></span>
+    </span>
+    <span class="sound-label">Music sleeping</span>
+  </button>
+
+  <main id="experience">
+    <section class="scene scene-intro is-active" data-scene="0" aria-labelledby="introTitle">
+      <div class="intro-sigil" aria-hidden="true">
+        <span class="sigil-orbit"></span>
+        <span class="sigil-crown">♛</span>
+      </div>
+      <p class="eyebrow">A message has crossed worlds</p>
+      <h1 id="introTitle">The Everlight<br>of Leela</h1>
+      <p class="intro-copy">
+        A tale kept by an ancient forest,<br>
+        for the girl known to one heart as Lilly.
+      </p>
+<button class="magic-button" id="enterEverwoodBtn" type="button">
+        <span>Enter the Everwood</span>
+        <i aria-hidden="true"></i>
+      </button>
+      <p class="small-note">Best experienced slowly, with sound</p>
+    </section>
+
+    <section class="scene" data-scene="1" aria-labelledby="chapterOneTitle" hidden>
+      <div class="chapter-card">
+        <p class="chapter-number">Chapter I</p>
+        <h2 id="chapterOneTitle">The Forest That Remembered</h2>
+        <div class="story-copy">
+          <p>Long before maps had names, the Everwood guarded a prophecy.</p>
+          <p>
+            It spoke of a girl born on the <strong>fourth day of July</strong>,
+            carrying a kind of magic no spellbook could teach.
+          </p>
+        </div>
+
+        <button class="rune-stone" id="runeStone" type="button" aria-describedby="runeHint">
+          <span class="rune-ring" aria-hidden="true"></span>
+          <span class="rune-mark" aria-hidden="true">L</span>
+        </button>
+        <p class="interaction-hint" id="runeHint">Touch the rune to reveal her name</p>
+
+        <div class="revelation" id="nameRevelation" aria-live="polite">
+          <p>In the ordinary world, she was called</p>
+          <strong>LEELA</strong>
+          <span>Lee when love needed fewer letters. Lilly when it needed softness.</span>
+        </div>
+
+        <button class="text-button chapter-next" type="button" data-next disabled>
+          Follow the light <span aria-hidden="true">→</span>
+        </button>
+      </div>
+    </section>
+
+    <section class="scene" data-scene="2" aria-labelledby="chapterTwoTitle" hidden>
+      <div class="chapter-card wide-card">
+        <p class="chapter-number">Chapter II</p>
+        <h2 id="chapterTwoTitle">The Queen Without a Crown</h2>
+        <p class="chapter-lead">The forest knew her by the magic she left behind.</p>
+
+        <div class="virtue-grid">
+          <button class="virtue-card" type="button" data-virtue="kindness">
+            <span class="virtue-symbol flower-symbol" aria-hidden="true">✦</span>
+            <strong>Her Kindness</strong>
+            <small>Touch to awaken</small>
+          </button>
+          <button class="virtue-card" type="button" data-virtue="heart">
+            <span class="virtue-symbol heart-symbol" aria-hidden="true">♡</span>
+            <strong>Her Heart</strong>
+            <small>Touch to awaken</small>
+          </button>
+          <button class="virtue-card" type="button" data-virtue="truth">
+            <span class="virtue-symbol truth-symbol" aria-hidden="true">◇</span>
+            <strong>Her Truth</strong>
+            <small>Touch to awaken</small>
+          </button>
+          <button class="virtue-card" type="button" data-virtue="fire">
+            <span class="virtue-symbol fire-symbol" aria-hidden="true">♨</span>
+            <strong>Her Fire</strong>
+            <small>Touch carefully</small>
+          </button>
+        </div>
+
+        <div class="virtue-message" id="virtueMessage" aria-live="polite">
+          <p>Select each piece of her magic.</p>
+        </div>
+
+        <div class="crown-reveal" id="crownReveal" aria-live="polite">
+          <span class="line"></span>
+          <div class="royal-crown" aria-hidden="true">♛</div>
+          <p>And so the forest gave her the name her family already knew:</p>
+          <strong>RANI</strong>
+          <em>Not because she demanded a kingdom, but because love naturally made one around her.</em>
+        </div>
+
+        <button class="text-button chapter-next" type="button" data-next disabled>
+          Continue the tale <span aria-hidden="true">→</span>
+        </button>
+      </div>
+    </section>
+
+    <section class="scene" data-scene="3" aria-labelledby="chapterThreeTitle" hidden>
+      <div class="chapter-card">
+        <p class="chapter-number">Chapter III</p>
+        <h2 id="chapterThreeTitle">Three Lanterns</h2>
+        <p class="chapter-lead">
+          For three years, her light found a traveler who had forgotten the way home.
+        </p>
+
+        <div class="lanterns" aria-label="Three years of love">
+          <button class="lantern" type="button" data-lantern="0" aria-label="Light the first lantern">
+            <span class="lantern-handle"></span>
+            <span class="lantern-body"><i></i></span>
+            <small>Year One</small>
+          </button>
+          <button class="lantern" type="button" data-lantern="1" aria-label="Light the second lantern">
+            <span class="lantern-handle"></span>
+            <span class="lantern-body"><i></i></span>
+            <small>Year Two</small>
+          </button>
+          <button class="lantern" type="button" data-lantern="2" aria-label="Light the third lantern">
+            <span class="lantern-handle"></span>
+            <span class="lantern-body"><i></i></span>
+            <small>Year Three</small>
+          </button>
+        </div>
+
+        <div class="lantern-message" id="lanternMessage" aria-live="polite">
+          <p>Light each lantern.</p>
+        </div>
+
+        <button class="text-button chapter-next" type="button" data-next disabled>
+          Find where the path leads <span aria-hidden="true">→</span>
+        </button>
+      </div>
+    </section>
+
+    <section class="scene" data-scene="4" aria-labelledby="chapterFourTitle" hidden>
+      <div class="chapter-card wide-card constellation-card">
+        <p class="chapter-number">Chapter IV</p>
+        <h2 id="chapterFourTitle">The Sky That Knew</h2>
+        <p class="chapter-lead">The stars have watched every step. Help them remember.</p>
+
+        <!-- Constellation Area -->
+        <div class="constellation-container" id="constellationContainer">
+          <svg class="constellation-svg" id="constellationSvg"></svg>
+          <div class="constellation-stars" id="constellationStars"></div>
+          <!-- Easter Egg Star -->
+          <button class="easter-egg-star" id="easterEggStar" type="button" aria-label="Anniversary Star"></button>
+          <div class="easter-egg-tooltip" id="easterEggTooltip" aria-live="polite"></div>
+        </div>
+
+        <div class="constellation-message" id="constellationMessage" aria-live="polite">
+          <p class="interaction-hint">Trace her birthday: <strong>04 • 07</strong> by connecting the stars in order.</p>
+        </div>
+
+        <div class="constellation-reveal-message" id="constellationRevealMessage" aria-live="polite">
+          <p class="quote-text"></p>
+<button class="hidden-note-btn" id="readRefusedButton" type="button" style="display: none;">
+  <span class="hidden-note-icon" aria-hidden="true">✉</span>
+  <span>Unfold the hidden note</span>
+</button>
+          <div class="secret-message" id="secretMessage"></div>
+        </div>
+
+        <button class="text-button chapter-next animate-glow" id="constellationNext" type="button" data-next disabled>
+          Walk onward <span aria-hidden="true">→</span>
+        </button>
+      </div>
+    </section>
+
+    <section class="scene" data-scene="5" aria-labelledby="chapterFiveTitle" hidden>
+      <div class="chapter-card home-card">
+        <p class="chapter-number">Chapter V</p>
+        <h2 id="chapterFiveTitle">The Place Called Home</h2>
+
+        <div class="path-illustration" aria-hidden="true">
+          <span class="path-glow"></span>
+          
+          <svg class="wanderer-trail" viewBox="0 0 100 120">
+            <path class="trail-path" d="M50,120 C20,90 80,60 50,15" fill="none" stroke="rgba(242, 213, 139, 0.4)" stroke-width="2.5" stroke-dasharray="3 7" stroke-linecap="round" />
+          </svg>
+
+          <span class="tiny-house">
+            <i class="chimney">
+              <i class="smoke-heart"></i>
+              <i class="smoke-heart delay-1"></i>
+              <i class="smoke-heart delay-2"></i>
+            </i>
+            <i class="roof"></i>
+            <i class="walls"></i>
+            <i class="window flickering"></i>
+          </span>
+        </div>
+
+        <div class="story-copy home-copy">
+          <p>
+            Before her, I was only moving. Wandering from place to place,
+            carrying weights I did not know how to put down.
+          </p>
+          <p>
+            Then she loved me. Not with distant magic, but with the kind that stays:
+            listening, feeling, forgiving, and making the cruel world quiet again.
+          </p>
+          <p class="home-truth">
+            I thought home was somewhere I had to find.<br>
+            <strong>It was a person. It was always her.</strong>
+          </p>
+        </div>
+
+<!-- 3. The Illuminated Oath -->
+        <div class="royal-decree-container" id="decreeContainer">
+          <div class="royal-decree is-shadowed" id="decreeContent">
+            <span>Royal Decree No. 04</span>
+            <p>
+              Her Majesty may be adorably lazy whenever she wishes.
+              Any available loved one, especially me, shall complete the task.
+            </p>
+            <small>Issued under the authority of Rani herself.</small>
+            
+            <!-- The hidden signature -->
+            <div class="golden-signature" id="royalSignature" aria-hidden="true">
+              Accepted and sworn by,<br>
+              <span class="signature-name">Nitish</span>
+            </div>
+          </div>
+          
+          <!-- NEW: Delicate text button instead of a bulky pill -->
+<!-- NEW: Delicate text button with proper wording and fixed classes -->
+          <button class="oath-btn" id="acknowledgeDecreeBtn" type="button">
+            Touch to reveal his promise <span aria-hidden="true">✦</span>
+          </button>
+        </div>
+
+        <!-- NEW: ID added, and it starts hidden/disabled -->
+        <button class="magic-button locked-next-btn" id="chapterFiveNext" type="button" data-next disabled>
+          <span>Open the final page</span>
+          <i aria-hidden="true"></i>
+        </button>
+      </div>
+    </section>
+
+    <section class="scene" data-scene="6" aria-labelledby="messengerTitle" hidden>
+      <div class="chapter-card messenger-card">
+        <p class="chapter-number">The Final Record</p>
+        <h2 id="messengerTitle">The Royal Messenger</h2>
+        
+        <div class="messenger-scene">
+          <p class="messenger-lead">The Everwood kept one final message.</p>
+          <p class="messenger-sub">Written long ago. Meant only for Lilly.</p>
+
+<!-- Update this specific section inside Scene 6 -->
+<div class="pedestal-container">
+  <div class="stone-pedestal"></div>
+  
+  <div class="sealed-parchment" id="sealedParchment" role="button" tabindex="0" aria-label="Break the royal seal">
+    <div class="hidden-letter-pull"></div>
+    
+    <div class="envelope-flaps-bottom"></div>
+    <div class="envelope-flap-top"></div>
+    
+    <div class="royal-wax-seal" id="royalWaxSeal">
+      <div class="seal-half left"><span class="seal-monogram-left">L</span></div>
+      <div class="seal-half right"><span class="seal-monogram-right">L</span></div>
+      <div class="seal-crest">♛</div>
+    </div>
+  </div>
+</div>
+
+<!-- The <button id="breakSealButton"> has been removed entirely -->
+          
+<p class="interaction-hint pulse-hint" style="margin-top: 15px;">Touch the seal to open</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="scene" data-scene="7" aria-labelledby="finalTitle" hidden>
+      <div class="final-letter" id="finalLetterPaper">
+        <div class="letter-corner corner-one letter-delayed-reveal" aria-hidden="true"></div>
+        <div class="letter-corner corner-two letter-delayed-reveal" aria-hidden="true"></div>
+        <p class="letter-date letter-delayed-reveal">For July 4th</p>
+        <h2 id="finalTitle" class="letter-title">My dearest Lilly,</h2>
+        <div class="letter-body letter-delayed-reveal">
+          <p>
+            If there really were enchanted forests, ancient spells, and kingdoms
+            beyond this world, none of their magic could mean to me what you do.
+          </p>
+          <p>
+            You are the sweetest and kindest soul I have ever known. You feel
+            everything deeply, love people completely, speak your heart honestly,
+            and somehow still choose to love me through all of me.
+          </p>
+          <p>
+            For three years, you have lifted weights you did not place on my
+            shoulders. When life becomes cruel and I am lost inside it, you are
+            the person I run to. You do not merely make my life happier. You make
+            it feel like it has somewhere to return to.
+          </p>
+          <p>
+            So on your birthday, I want you to remember this: you deserve to be
+            treated like a queen, not only today, but in every ordinary little day
+            that follows. Even on the short-tempered days. Especially on the lazy ones.
+          </p>
+          <p class="letter-promise">
+            In every world, in every story, I would still look for you.<br>
+            And when I found you, I would know I was home.
+          </p>
+        </div>
+        <p class="signature letter-delayed-reveal">
+          Happy Birthday, my Lee.
+          <span>All my love, always.<br>Nitish</span>
+        </p>
+
+        <div class="birthday-countdown letter-delayed-reveal" id="birthdayCountdown" aria-live="polite"></div>
+
+        <button class="seal-button letter-delayed-reveal" id="sealButton" type="button">
+          <span class="wax-seal" aria-hidden="true">L</span>
+          <span>Make a birthday wish</span>
+        </button>
+      </div>
+    </section>
+
+    <section class="scene scene-wish" data-scene="8" aria-labelledby="wishTitle" hidden>
+      <div class="wish-stars" aria-hidden="true"></div>
+      <p class="eyebrow">The Everwood has heard your wish</p>
+      <h2 id="wishTitle">Happy Birthday,<br>My Lee</h2>
+      <p>
+        May the world be as gentle with you<br>
+        as you have always been with mine.
+      </p>
+      <div class="final-crown" aria-hidden="true">♛</div>
+      <button class="text-button pocket-spell-button" id="pocketSpellButton" type="button" aria-expanded="false">
+        A spell for difficult days <span aria-hidden="true">✦</span>
+      </button>
+      <div class="pocket-spell" id="pocketSpell" aria-live="polite">
+        <p class="spell-title">Keep this spell with you</p>
+        <p>
+          Lilly, you never have to earn rest, softness, or love.
+          You are loved when you are bright, emotional, angry, tired,
+          or when you need someone else to carry things for a while.
+        </p>
+        <strong>When the world feels cruel, come home to me too.</strong>
+      </div>
+      <button class="text-button replay-button" id="replayButton" type="button">
+        Read our story again <span aria-hidden="true">↺</span>
+      </button>
+    </section>
+
+    <nav class="story-progress" aria-label="Story progress">
+      <span class="progress-line"><i id="progressFill"></i></span>
+      <ol>
+        <li class="is-current"><span>1</span></li>
+        <li><span>2</span></li>
+        <li><span>3</span></li>
+        <li><span>4</span></li>
+        <li><span>5</span></li>
+        <li><span>6</span></li>
+      </ol>
+    </nav>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
